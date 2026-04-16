@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rudra Realty — Find Your Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F0E8;
+      --ivory: #FAF7F2;
+      --clay: #C4A882;
+      --terracotta: #B5704A;
+      --charcoal: #2C2520;
+      --smoke: #6B6259;
+      --gold: #C9A84C;
+      --divider: rgba(196,168,130,0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ivory);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--divider);
+      transition: padding 0.3s;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--charcoal); text-decoration: none;
+    }
+    .logo span { color: var(--terracotta); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--smoke); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--terracotta); }
+    .nav-cta {
+      background: var(--terracotta); color: #fff !important;
+      padding: 10px 22px; border-radius: 2px;
+      color: #fff; transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--charcoal) !important; color: #fff !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--charcoal); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+    .hero-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 60px 80px 80px;
+      animation: fadeUp 1s ease both;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--clay);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--charcoal);
+      margin-bottom: 28px;
+    }
+    .hero-title em { font-style: italic; color: var(--terracotta); }
+    .hero-sub {
+      font-size: 1rem; line-height: 1.7; color: var(--smoke);
+      max-width: 420px; margin-bottom: 44px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block; background: var(--terracotta); color: #fff;
+      padding: 15px 32px; font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--charcoal); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block; border: 1.5px solid var(--clay); color: var(--charcoal);
+      padding: 15px 32px; font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .btn-outline:hover { background: var(--charcoal); color: #fff; border-color: var(--charcoal); }
+    .hero-image {
+      position: relative; overflow: hidden;
+      animation: fadeIn 1.2s ease 0.2s both;
+    }
+    .hero-image img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .hero-image::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(181,112,74,0.12) 0%, transparent 60%);
+    }
+    .hero-badge {
+      position: absolute; bottom: 40px; left: -20px;
+      background: var(--ivory); border: 1px solid var(--divider);
+      padding: 18px 24px; border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(44,37,32,0.12);
+      animation: slideIn 1s ease 0.6s both;
+    }
+    .hero-badge strong { display: block; font-size: 1.6rem; color: var(--terracotta); }
+    .hero-badge span { font-size: 0.75rem; color: var(--smoke); letter-spacing: 0.08em; }
+
+    /* ── STATS ── */
+    .stats-bar {
+      background: var(--charcoal); color: var(--cream);
+      display: flex; justify-content: center; gap: 0;
+    }
+    .stat-item {
+      flex: 1; max-width: 220px; text-align: center;
+      padding: 36px 20px; border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; color: var(--clay);
+      display: block; margin-bottom: 6px;
+    }
+    .stat-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 100px 80px; }
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--clay); margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.2;
+      color: var(--charcoal); margin-bottom: 20px;
+    }
+    .section-title em { font-style: italic; color: var(--terracotta); }
+    .section-sub { font-size: 0.95rem; line-height: 1.75; color: var(--smoke); max-width: 500px; }
+    .section-header { margin-bottom: 60px; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--cream); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .service-card {
+      background: var(--ivory); padding: 48px 36px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .service-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--terracotta);
+      transform: scaleX(0); transition: transform 0.3s;
+    }
+    .service-card:hover { transform: translateY(-4px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      font-size: 2rem; margin-bottom: 20px; display: block;
+    }
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400; margin-bottom: 14px;
+      color: var(--charcoal);
+    }
+    .service-card p { font-size: 0.88rem; line-height: 1.7; color: var(--smoke); }
+
+    /* ── FEATURED PROPERTIES ── */
+    #properties { background: var(--ivory); }
+    .properties-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .property-card {
+      border: 1px solid var(--divider); border-radius: 4px; overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+      background: #fff;
+    }
+    .property-card:hover {
+      box-shadow: 0 16px 48px rgba(44,37,32,0.12);
+      transform: translateY(-6px);
+    }
+    .property-img {
+      width: 100%; height: 220px; object-fit: cover;
+      display: block; transition: transform 0.4s;
+    }
+    .property-card:hover .property-img { transform: scale(1.04); }
+    .property-img-wrap { overflow: hidden; position: relative; }
+    .property-tag {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--terracotta); color: #fff;
+      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 6px 12px; border-radius: 2px;
+    }
+    .property-body { padding: 24px; }
+    .property-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; color: var(--terracotta);
+      margin-bottom: 6px;
+    }
+    .property-name {
+      font-size: 0.95rem; font-weight: 500; color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+    .property-loc { font-size: 0.8rem; color: var(--smoke); margin-bottom: 18px; }
+    .property-specs {
+      display: flex; gap: 18px; padding-top: 16px;
+      border-top: 1px solid var(--divider);
+    }
+    .spec { font-size: 0.78rem; color: var(--smoke); }
+    .spec strong { display: block; font-size: 0.88rem; color: var(--charcoal); font-weight: 500; }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--charcoal); color: var(--cream);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center;
+    }
+    #about .section-title { color: var(--cream); }
+    #about .section-eyebrow { color: var(--clay); }
+    #about .section-sub { color: rgba(245,240,232,0.7); max-width: 100%; }
+    .about-img { border-radius: 4px; overflow: hidden; }
+    .about-img img { width: 100%; display: block; }
+    .about-features { margin-top: 36px; display: flex; flex-direction: column; gap: 18px; }
+    .about-feat {
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .feat-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--terracotta); margin-top: 7px; flex-shrink: 0;
+    }
+    .about-feat h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 4px; }
+    .about-feat p { font-size: 0.82rem; opacity: 0.65; line-height: 1.6; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--cream); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .testimonial {
+      background: var(--ivory); padding: 36px 30px; border-radius: 4px;
+      border-left: 3px solid var(--clay); position: relative;
+    }
+    .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px; }
+    .testimonial blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-style: italic; line-height: 1.7;
+      color: var(--charcoal); margin-bottom: 20px;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--clay); display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+      color: #fff; font-weight: 600; flex-shrink: 0;
+    }
+    .author-name { font-size: 0.85rem; font-weight: 500; color: var(--charcoal); }
+    .author-detail { font-size: 0.75rem; color: var(--smoke); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--ivory); }
+    .contact-wrapper {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 32px; }
+    .contact-item { display: flex; gap: 16px; }
+    .contact-icon {
+      width: 44px; height: 44px; background: var(--cream);
+      border: 1px solid var(--divider); border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-item h4 { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--clay); margin-bottom: 6px; }
+    .contact-item p { font-size: 0.9rem; color: var(--charcoal); line-height: 1.5; }
+    .contact-form { display: flex; flex-direction: column; gap: 18px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--smoke); font-weight: 500;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      border: 1.5px solid var(--divider); border-radius: 2px;
+      padding: 13px 16px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; color: var(--charcoal);
+      background: var(--cream); outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--terracotta); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      background: var(--terracotta); color: #fff;
+      border: none; padding: 15px 40px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+      font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      border-radius: 2px; cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--charcoal); transform: translateY(-2px); }
+    #form-success {
+      display: none; background: #e8f5e9; border: 1px solid #a5d6a7;
+      color: #2e7d32; padding: 14px 18px; border-radius: 2px;
+      font-size: 0.88rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal); color: rgba(245,240,232,0.7);
+      padding: 60px 80px 30px;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px; margin-bottom: 48px;
+    }
+    .footer-brand .logo { color: var(--cream); }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; margin-top: 16px; opacity: 0.65; }
+    .footer-col h4 {
+      font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--clay); margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { font-size: 0.85rem; color: rgba(245,240,232,0.65); text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--clay); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { font-size: 0.78rem; opacity: 0.45; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; flex-direction: column; position: absolute;
+        top: 64px; left: 0; right: 0; background: var(--ivory);
+        padding: 24px; gap: 20px; border-bottom: 1px solid var(--divider); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      section { padding: 70px 24px; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-text { padding: 60px 24px 40px; }
+      .hero-image { height: 50vw; min-height: 260px; }
+      .hero-badge { bottom: 16px; left: 16px; }
+      #about { grid-template-columns: 1fr; padding: 70px 24px; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 40px; }
+      .services-grid { grid-template-columns: 1fr; gap: 2px; }
+      .properties-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .stats-bar { flex-wrap: wrap; }
+      .stat-item { min-width: 120px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="logo" href="#"><span>R</span>udra Realty</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#properties">Properties</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Mumbai's Trusted Property Experts Since 2009</p>
+    <h1 class="hero-title">Find Your<br/><em>Perfect</em><br/>Home</h1>
+    <p class="hero-sub">Rudra Realty connects families and investors with premium residential and commercial properties across Mumbai, Thane, and Navi Mumbai.</p>
+    <div class="hero-actions">
+      <a href="#properties" class="btn-primary">View Properties</a>
+      <a href="#contact" class="btn-outline">Book a Consultation</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80" alt="Premium property"/>
+    <div class="hero-badge">
+      <strong>500+</strong>
+      <span>Happy Families Placed</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <span class="stat-num">15+</span>
+    <span class="stat-label">Years in Business</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">₹800Cr+</span>
+    <span class="stat-label">Properties Transacted</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">500+</span>
+    <span class="stat-label">Happy Clients</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">3</span>
+    <span class="stat-label">Cities Covered</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">98%</span>
+    <span class="stat-label">Client Satisfaction</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">What We Offer</p>
+    <h2 class="section-title">Full-Spectrum <em>Realty</em> Services</h2>
+    <p class="section-sub">From first-time buyers to seasoned investors — we guide you through every step of your property journey.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">🏠</span>
+      <h3>Residential Sales</h3>
+      <p>Helping families buy their dream homes across Mumbai, Thane, and Navi Mumbai. We handle negotiations, documentation, and legal due diligence.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🏢</span>
+      <h3>Commercial Leasing</h3>
+      <p>Office spaces, retail units, and co-working setups — sourced and negotiated for your business needs with full transparency.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">📈</span>
+      <h3>Property Investment</h3>
+      <p>Expert advisory for investors seeking rental yield or capital appreciation in Mumbai's evolving real estate market.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">📋</span>
+      <h3>Legal &amp; Documentation</h3>
+      <p>End-to-end support with agreements, RERA compliance, stamp duty, and registration — stress-free, handled by experts.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🔑</span>
+      <h3>Rental Management</h3>
+      <p>We source reliable tenants, draft rental agreements, and manage the property on your behalf so you earn without the hassle.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🏗️</span>
+      <h3>New Project Advisory</h3>
+      <p>Partnering with leading builders to bring you pre-launch deals and under-construction projects at competitive pricing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section id="properties">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Listings</p>
+    <h2 class="section-title"><em>Featured</em> Properties</h2>
+    <p class="section-sub">A curated selection of our current listings — spanning budget-friendly to premium.</p>
+  </div>
+  <div class="properties-grid">
+
+    <div class="property-card reveal">
+      <div class="property-img-wrap">
+        <img class="property-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=75" alt="Powai Apartment"/>
+        <span class="property-tag">For Sale</span>
+      </div>
+      <div class="property-body">
+        <p class="property-price">₹1.85 Cr</p>
+        <p class="property-name">Serenity Heights — 2 BHK</p>
+        <p class="property-loc">📍 Powai, Mumbai</p>
+        <div class="property-specs">
+          <div class="spec"><strong>2</strong> Beds</div>
+          <div class="spec"><strong>2</strong> Baths</div>
+          <div class="spec"><strong>1,050</strong> sq ft</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="property-card reveal">
+      <div class="property-img-wrap">
+        <img class="property-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=75" alt="Thane Villa"/>
+        <span class="property-tag">For Sale</span>
+      </div>
+      <div class="property-body">
+        <p class="property-price">₹3.20 Cr</p>
+        <p class="property-name">Oakwood Residence — 3 BHK</p>
+        <p class="property-loc">📍 Ghodbunder Road, Thane</p>
+        <div class="property-specs">
+          <div class="spec"><strong>3</strong> Beds</div>
+          <div class="spec"><strong>3</strong> Baths</div>
+          <div class="spec"><strong>1,680</strong> sq ft</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="property-card reveal">
+      <div class="property-img-wrap">
+        <img class="property-img" src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=75" alt="Navi Mumbai Flat"/>
+        <span class="property-tag">For Rent</span>
+      </div>
+      <div class="property-body">
+        <p class="property-price">₹28,000/mo</p>
+        <p class="property-name">Metro Nest — 2 BHK</p>
+        <p class="property-loc">📍 Vashi, Navi Mumbai</p>
+        <div class="property-specs">
+          <div class="spec"><strong>2</strong> Beds</div>
+          <div class="spec"><strong>2</strong> Baths</div>
+          <div class="spec"><strong>920</strong> sq ft</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="property-card reveal">
+      <div class="property-img-wrap">
+        <img class="property-img" src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=600&q=75" alt="Andheri Office"/>
+        <span class="property-tag">Commercial</span>
+      </div>
+      <div class="property-body">
+        <p class="property-price">₹95,000/mo</p>
+        <p class="property-name">Skyline Business Hub — Office</p>
+        <p class="property-loc">📍 Andheri East, Mumbai</p>
+        <div class="property-specs">
+          <div class="spec"><strong>Open</strong> Plan</div>
+          <div class="spec"><strong>2</strong> Cabins</div>
+          <div class="spec"><strong>2,200</strong> sq ft</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="property-card reveal">
+      <div class="property-img-wrap">
+        <img class="property-img" src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600&q=75" alt="Kharghar Flat"/>
+        <span class="property-tag">For Sale</span>
+      </div>
+      <div class="property-body">
+        <p class="property-price">₹72 L</p>
+        <p class="property-name">Green Valley — 1 BHK</p>
+        <p class="property-loc">📍 Kharghar, Navi Mumbai</p>
+        <div class="property-specs">
+          <div class="spec"><strong>1</strong> Bed</div>
+          <div class="spec"><strong>1</strong> Bath</div>
+          <div class="spec"><strong>620</strong> sq ft</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="property-card reveal">
+      <div class="property-img-wrap">
+        <img class="images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=75" alt="Mulund Row House"/>
+        <img class="property-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=75" alt="Mulund Row House"/>
+        <span class="property-tag">For Sale</span>
+      </div>
+      <div class="property-body">
+        <p class="property-price">₹4.50 Cr</p>
+        <p class="property-name">Lakeview Row House — 4 BHK</p>
+        <p class="property-loc">📍 Mulund West, Mumbai</p>
+        <div class="property-specs">
+          <div class="spec"><strong>4</strong> Beds</div>
+          <div class="spec"><strong>4</strong> Baths</div>
+          <div class="spec"><strong>2,400</strong> sq ft</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img reveal">
+    <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=800&q=80" alt="Rudra Realty office" style="border-radius:4px;"/>
+  </div>
+  <div>
+    <p class="section-eyebrow">Our Story</p>
+    <h2 class="section-title">Built on <em>Trust</em>,<br/>Driven by Results</h2>
+    <p class="section-sub" style="color:rgba(245,240,232,0.7)">Founded in 2009 by Mr. Rajesh Sharma, Rudra Realty began as a one-person consultancy in Thane. Today, we are a 12-member team serving clients across the Mumbai Metropolitan Region — with a reputation built entirely on honest advice and genuine client outcomes.</p>
+    <div class="about-features reveal">
+      <div class="about-feat">
+        <div class="feat-dot"></div>
+        <div>
+          <h4>RERA Registered Agency</h4>
+          <p>Fully compliant with Maharashtra's Real Estate Regulatory Authority guidelines.</p>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="feat-dot"></div>
+        <div>
+          <h4>No Hidden Charges</h4>
+          <p>We believe in upfront, transparent fee structures. No surprises at closing.</p>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="feat-dot"></div>
+        <div>
+          <h4>Post-Sale Support</h4>
+          <p>We remain available even after the deal is done — for possession, interiors, or future needs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Client Stories</p>
+    <h2 class="section-title">What Our Clients <em>Say</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Rudra Realty helped us find our first home in Thane within our budget. Rajesh sir personally guided us through every document — we felt genuinely cared for."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">P</div>
+        <div>
+          <p class="author-name">Priya & Arjun Mehta</p>
+          <p class="author-detail">Purchased in Thane West, 2023</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <blockquote>"As an NRI, managing a property purchase remotely felt daunting. Rudra Realty handled everything seamlessly — from site visits to registration. Truly professional."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">S</div>
+        <div>
+          <p class="author-name">Suresh Nair</p>
+          <p class="author-detail">NRI Investor, Dubai — Bought in Navi Mumbai</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <blockquote>"We needed a commercial space quickly. The team found us three options within a week, negotiated a great price, and we moved in within 45 days. Outstanding service."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">K</div>
+        <div>
+          <p class="author-name">Kavita Desai</p>
+          <p class="author-detail">Business Owner, Andheri East</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Get in Touch</p>
+    <h2 class="section-title">Let's Find Your <em>Next Property</em></h2>
+  </div>
+  <div class="contact-wrapper">
+    <div class="contact-info reveal">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h4>Office Address</h4>
+          <p>Shop No. 7, Shree Complex,<br/>Cadbury Junction, Thane West,<br/>Maharashtra — 400601</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h4>Phone / WhatsApp</h4>
+          <p>+91 98200 XXXXX<br/>Mon–Sat, 9am to 7pm</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <h4>Email</h4>
+          <p>info@rudrarealty.in</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏷️</div>
+        <div>
+          <h4>RERA Registration</h4>
+          <p>MH/AGENT/XXXXXXX/2019</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form reveal" id="contactForm" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="name" placeholder="Your name" required/>
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>I'm looking for</label>
+        <select id="interest">
+          <option value="">— Select an option —</option>
+          <option>Buy a Residential Property</option>
+          <option>Rent a Residential Property</option>
+          <option>Commercial Space</option>
+          <option>Investment Advisory</option>
+          <option>Sell My Property</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Budget / Requirements</label>
+        <textarea id="message" placeholder="Tell us about your requirements, preferred location, budget, etc."></textarea>
+      </div>
+      <div id="form-success">✅ Thank you! We'll reach out within 24 hours.</div>
+      <button type="submit" class="form-submit">Send Enquiry</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="logo" href="#"><span style="color:var(--clay)">R</span>udra Realty</a>
+      <p>Mumbai's trusted real estate partner since 2009. We help families and investors find their perfect property with honesty and expertise.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Residential Sales</a></li>
+        <li><a href="#services">Commercial Leasing</a></li>
+        <li><a href="#services">Rental Management</a></li>
+        <li><a href="#services">Legal Advisory</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Areas</h4>
+      <ul>
+        <li><a href="#properties">Mumbai</a></li>
+        <li><a href="#properties">Thane</a></li>
+        <li><a href="#properties">Navi Mumbai</a></li>
+        <li><a href="#properties">Kalyan-Dombivli</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Rudra Realty. All rights reserved. RERA Reg. MH/AGENT/XXXXXXX/2019</p>
+    <p>Designed with ♥ for Mumbai's homebuyers</p>
+  </div>
+</footer>
+
+<script>
+  // Hamburger
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  function submitForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    if (!name) return;
+    document.getElementById('form-success').style.display = 'block';
+    document.getElementById('contactForm').reset();
+    setTimeout(() => {
+      document.getElementById('form-success').style.display = 'none';
+    }, 5000);
+  }
+
+  // Smooth nav shrink
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.padding = window.scrollY > 50 ? '12px 60px' : '20px 60px';
+  });
+</script>
+</body>
+</html>
