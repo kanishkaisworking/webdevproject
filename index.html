@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rudra Realty — Find Your Place</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ivory: #FAF7F2;
+      --cream: #F5F0E8;
+      --terracotta: #B5704A;
+      --charcoal: #2C2520;
+      --smoke: #6B6259;
+      --clay: #C4A882;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ivory);
+      color: var(--charcoal);
+    }
+
+    nav {
+      position: fixed;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: rgba(250,247,242,0.95);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--smoke);
+    }
+
+    section {
+      padding: 100px 40px;
+    }
+
+    #hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: var(--terracotta);
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      padding: 20px;
+      background: white;
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+
+    @media(max-width:900px){
+      #hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">Rudra Realty</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#properties">Properties</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-text">
+    <h1 class="hero-title">Find Your Perfect Home</h1>
+    <p>Premium real estate solutions across Mumbai & Navi Mumbai.</p>
+    <a href="#contact" class="btn">Contact Us</a>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9" />
+  </div>
+</section>
+
+<section id="services">
+  <h2>Services</h2>
+  <div class="grid">
+    <div class="card">Residential Sales</div>
+    <div class="card">Commercial Leasing</div>
+    <div class="card">Investment Advisory</div>
+  </div>
+</section>
+
+<section id="properties">
+  <h2>Featured Properties</h2>
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688" width="100%">
+      <p>2 BHK — ₹1.85 Cr</p>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" width="100%">
+      <p>3 BHK — ₹3.2 Cr</p>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750" width="100%">
+      <p>4 BHK — ₹4.5 Cr</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <form onsubmit="submitForm(event)">
+    <input type="text" id="name" placeholder="Name" required><br><br>
+    <input type="email" placeholder="Email"><br><br>
+    <button type="submit" class="btn">Submit</button>
+  </form>
+  <p id="success" style="display:none;color:green;">Form submitted!</p>
+</section>
+
+<footer>
+  <p>© Rudra Realty</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  window.submitForm = function(e){
+    e.preventDefault();
+    document.getElementById("success").style.display="block";
+  }
+
+});
+</script>
+
+</body>
+</html>
